@@ -578,10 +578,11 @@
 
             if (!inst.inline && inst.options.showCloseButton) {
               html += '<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button">'
-                + '<span class="ui-icon ui-icon-closethick">close</span></a>';
+                + '<svg class="text-and-icons-dark no-pointer-events" id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path d="M19.06,18l7-7A.75.75,0,0,0,25,10l-7,7-7-7A.75.75,0,0,0,10,11l7,7-7,7A.75.75,0,0,0,10,26,.75.75,0,0,0,11,26l7-7,7,7A.75.75,0,0,0,26,26,.75.75,0,0,0,26,25Z"/></svg></a>';
             }
 
-            return '<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">' + html + '</div>';
+            return '<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">' + html + '</div>' +
+                '<hr style="margin: 1rem 0.3rem;" class="sidebar-divider">';
           },
           _onclick = function(event) {
             event.preventDefault();
@@ -1535,7 +1536,7 @@
               html += '<input class="ui-colorpicker-hex-alpha" type="text" maxlength="2" size="2"/>';
             }
 
-            html += '<input class="ui-colorpicker-hex-input" type="text" maxlength="6" size="6"/>';
+            html += '<input style="width: 4.5rem" class="ui-colorpicker-hex-input" type="text" maxlength="6" size="6"/>';
 
             return '<div class="ui-colorpicker-hex"><label>#</label>' + html + '</div>';
           };
@@ -1634,6 +1635,8 @@
           html = function () {
             var html = '';
 
+            html += '<hr class="sidebar-divider">'
+
             if (inst.options.alpha || (!inst.inline && inst.options.showNoneButton)) {
               html += '<div class="ui-colorpicker-buttonset">';
 
@@ -1647,11 +1650,14 @@
             }
 
             if (!inst.inline) {
-              html += '<div class="ui-dialog-buttonset">';
+              html += '<div class="ui-dialog-buttonset '+ inst.options.additionalButtonHolderClass +'">';
               if (inst.options.showCancelButton) {
-                html += '<button class="ui-colorpicker-cancel">' + inst._getRegional('cancel') + '</button>';
+                html += '<button class="ui-colorpicker-cancel '+ inst.options.additionalButtonClass +'">' + inst.options.btnCancel + '</button>';
               }
-              html += '<button class="ui-colorpicker-ok">' + inst._getRegional('ok') + '</button>';
+              if (inst.options.showButtonDivider) {
+                html += '<div class="ui-colorpicker-divider '+ inst.options.additionalBtnDividerClass +'"></div>';
+              }
+              html += '<button class="ui-colorpicker-ok '+ inst.options.additionalButtonClass +'">' + inst.options.btnOk + '</button>';
               html += '</div>';
             }
 
@@ -2368,9 +2374,15 @@
       revert:       false,    // Revert color upon non
       rgb:        true,   // Show RGB controls and modes
       showAnim:     'fadeIn',
+      additionalButtonHolderClass:     '',
+      additionalButtonClass:     '',
+      additionalBtnDividerClass:     '',
       showCancelButton: true,
+      showButtonDivider: false,
       showNoneButton:   false,
       showCloseButton:  true,
+      btnOk: 'ok',
+      btnCancel: 'cancel',
       showOn:       'focus click alt',    // 'focus', 'click', 'button', 'alt', 'all'
       showOptions:    {},
       swatches:     null,   // null for default or kv-object or names swatches set
